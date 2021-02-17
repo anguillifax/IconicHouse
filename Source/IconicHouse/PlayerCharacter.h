@@ -4,7 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
 #include "PlayerCharacter.generated.h"
+
+class UCameraComponent;
 
 UCLASS()
 class ICONICHOUSE_API APlayerCharacter : public ACharacter
@@ -12,18 +15,23 @@ class ICONICHOUSE_API APlayerCharacter : public ACharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UCameraComponent* EyeCamera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Movement)
+	float WalkSpeed;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Movement)
+	float RunSpeed;
+
+public:
 	APlayerCharacter();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void MoveForward(float Val);
+	void MoveRight(float Val);
 };
